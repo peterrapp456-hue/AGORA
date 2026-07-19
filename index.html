@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AGORA — Interface Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:            #1B2131;
+    --panel:         #141A28;
+    --panel-raised:  #202739;
+    --hairline:      #333B4F;
+    --ink:           #EDE9DD;
+    --ink-dim:       #9AA1B4;
+    --ink-faint:     #6B7286;
+    --wire-amber:    #E5A13B;
+    --verified-teal: #45AFA1;
+    --disputed-rose: #C9587C;
+    --chip-bg:       #262E42;
+    --radius:        10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 12% -10%, rgba(229,161,59,0.07), transparent 60%),
+      radial-gradient(900px 500px at 100% 20%, rgba(69,175,161,0.06), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    padding:56px 40px 90px;
+  }
+
+  /* ---------- Header / brand ---------- */
+  .brand-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    max-width:1320px;
+    margin:0 auto 8px;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .wordmark{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:34px;
+    letter-spacing:0.5px;
+  }
+  .wordmark span{ color:var(--wire-amber); }
+  .tagline{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .subhead{
+    max-width:1320px;
+    margin:0 auto 46px;
+    color:var(--ink-dim);
+    font-size:14px;
+    border-top:1px solid var(--hairline);
+    padding-top:16px;
+  }
+
+  .stage{
+    max-width:1320px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:36px;
+    align-items:start;
+  }
+  @media (max-width:980px){ .stage{ grid-template-columns:1fr; } }
+
+  .frame-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .frame-label::before{
+    content:'';
+    width:6px;height:6px;border-radius:50%;
+    background:var(--verified-teal);
+    display:inline-block;
+  }
+
+  /* ---------- Phone frame (feed) ---------- */
+  .phone{
+    background:#0E1320;
+    border:1px solid var(--hairline);
+    border-radius:34px;
+    padding:14px;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);
+  }
+  .phone-screen{
+    background:var(--panel);
+    border-radius:22px;
+    overflow:hidden;
+    min-height:640px;
+    display:flex;
+    flex-direction:column;
+  }
+  .phone-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 18px 10px;
+  }
+  .app-mark{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:19px;
+  }
+  .app-mark span{color:var(--wire-amber);}
+  .icon-btn{
+    width:26px;height:26px;
+    border-radius:50%;
+    border:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-dim);
+  }
+  .tag-row{
+    display:flex;
+    gap:8px;
+    padding:6px 18px 14px;
+    overflow-x:auto;
+  }
+  .tag-pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    padding:5px 10px;
+    border-radius:20px;
+    background:var(--chip-bg);
+    color:var(--ink-dim);
+    white-space:nowrap;
+    border:1px solid transparent;
+  }
+  .tag-pill.active{
+    color:#191510;
+    background:var(--wire-amber);
+    font-weight:600;
+  }
+
+  .feed{
+    padding:6px 14px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    flex:1;
+  }
+  .card{
+    background:var(--panel-raised);
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    padding:14px 14px 12px;
+  }
+  .card.hero{
+    border-color:rgba(229,161,59,0.45);
+    background:linear-gradient(180deg, rgba(229,161,59,0.09), var(--panel-raised) 60%);
+  }
+  .card-tags{
+    display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;
+  }
+  .micro-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    color:var(--wire-amber);
+    letter-spacing:0.5px;
+  }
+  .micro-tag.muted{ color:var(--ink-faint); }
+  .card h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:17px;
+    line-height:1.28;
+    margin:0 0 8px;
+  }
+  .card.dim h3{ font-size:15px; color:var(--ink-dim); font-weight:500;}
+  .card-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--ink-faint);
+  }
+  .source-avatars{ display:flex; }
+  .source-avatars .dot{
+    width:18px;height:18px;
+    border-radius:50%;
+    background:var(--chip-bg);
+    border:1.5px solid var(--panel-raised);
+    margin-left:-6px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:9px;
+    color:var(--ink-dim);
+  }
+  .source-avatars .dot:first-child{margin-left:0;}
+  .live-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--disputed-rose);
+    display:inline-block;margin-right:5px;
+    box-shadow:0 0 0 3px rgba(201,88,124,0.2);
+  }
+
+  .phone-tabbar{
+    margin-top:auto;
+    display:flex;
+    justify-content:space-around;
+    padding:14px 10px;
+    border-top:1px solid var(--hairline);
+  }
+  .tab{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    color:var(--ink-faint);
+    letter-spacing:0.5px;
+  }
+  .tab.on{ color:var(--wire-amber); }
+
+  /* ---------- Detail / browser panel ---------- */
+  .browser{
+    background:#0E1320;
+    border:1px solid var(--hairline);
+    border-radius:16px;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);
+    overflow:hidden;
+  }
+  .browser-chrome{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:11px 14px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .browser-chrome .dot{ width:8px;height:8px;border-radius:50%; background:var(--hairline); }
+  .url-pill{
+    margin-left:10px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--ink-faint);
+    background:var(--chip-bg);
+    padding:4px 12px;
+    border-radius:20px;
+  }
+
+  .detail{ padding:30px 34px 40px; }
+
+  .breaking-row{
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:14px;
+  }
+  .breaking-flag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:#191510;
+    background:var(--disputed-rose);
+    padding:3px 9px;
+    border-radius:4px;
+    font-weight:600;
+  }
+  .breaking-meta{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+  }
+
+  .detail h1{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:32px;
+    line-height:1.18;
+    margin:0 0 10px;
+    max-width:760px;
+  }
+  .detail-sub{
+    color:var(--ink-dim);
+    font-size:14.5px;
+    max-width:680px;
+    margin:0 0 22px;
+    line-height:1.55;
+  }
+
+  .source-array{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:8px;
+  }
+  .array-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    width:100%;
+    margin-bottom:10px;
+  }
+  .src-chip{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:var(--chip-bg);
+    border:1px solid var(--hairline);
+    border-radius:20px;
+    padding:6px 12px 6px 8px;
+    font-size:12px;
+    color:var(--ink);
+  }
+  .src-chip svg{ width:15px;height:15px; flex-shrink:0; }
+  .src-chip .n{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    color:var(--ink-faint);
+    margin-left:2px;
+  }
+
+  .legend{
+    display:flex;
+    gap:22px;
+    margin:26px 0 6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-dim);
+  }
+  .legend-item{ display:flex; align-items:center; gap:7px; }
+  .legend-swatch{ width:14px;height:3px;border-radius:2px; }
+
+  /* ---------- Timeline ---------- */
+  .timeline-wrap{ position:relative; margin-top:18px; }
+  .timeline-wrap svg{ position:absolute; top:0; left:0; }
+
+  .t-row{ position:relative; display:flex; margin-bottom:6px; }
+  .t-node{
+    position:relative;
+    width:46%;
+    padding:14px 18px;
+    background:var(--panel-raised);
+    border:1px solid var(--hairline);
+    border-radius:10px;
+  }
+  .t-row.trunk .t-node{ width:52%; margin:0 auto; }
+  .t-row.left .t-node{ margin-right:auto; }
+  .t-row.right .t-node{ margin-left:auto; }
+
+  .t-node .time{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+  }
+  .t-node .src-line{
+    display:flex;align-items:center;gap:6px;
+    margin:5px 0 7px;
+  }
+  .t-node .src-line svg{ width:14px;height:14px; }
+  .t-node .src-name{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.3px;
+  }
+  .t-node p{ margin:0; font-size:13.5px; line-height:1.5; color:var(--ink); }
+  .t-node.teal{ border-color:rgba(69,175,161,0.5); }
+  .t-node.teal .src-name{ color:var(--verified-teal); }
+  .t-node.rose{ border-color:rgba(201,88,124,0.5); }
+  .t-node.rose .src-name{ color:var(--disputed-rose); }
+  .t-node.rose.retracted{ opacity:0.55; }
+  .t-node.rose.retracted::after{
+    content:'UNCONFIRMED · RETRACTED';
+    display:block;
+    margin-top:8px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:1px;
+    color:var(--disputed-rose);
+  }
+  .fork-label{
+    text-align:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:2px 0 14px;
+  }
+  .branch-heading{
+    display:flex;
+    gap:0;
+    margin-bottom:8px;
+  }
+  .branch-heading .bh{
+    width:46%;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:0 4px;
+  }
+  .branch-heading .bh.left{ color:var(--verified-teal); margin-right:auto; text-align:left; }
+  .branch-heading .bh.right{ color:var(--disputed-rose); margin-left:auto; text-align:right; }
+
+  .caption-note{
+    max-width:1320px;
+    margin:44px auto 0;
+    color:var(--ink-faint);
+    font-size:12.5px;
+    line-height:1.6;
+    border-top:1px solid var(--hairline);
+    padding-top:18px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="brand-row">
+    <div class="wordmark">AG<span>O</span>RA</div>
+    <div class="tagline">Interface concept — narrative provenance engine</div>
+  </div>
+  <div class="subhead">Hypothetical story shown for demonstration. Left: personalized feed. Right: source array and branching timeline for a single story.</div>
+
+  <div class="stage">
+
+    <!-- FEED (phone) -->
+    <div>
+      <div class="frame-label">Mobile — For You Feed</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-topbar">
+            <div class="app-mark">AG<span>O</span>RA</div>
+            <div class="icon-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+          </div>
+          <div class="tag-row">
+            <div class="tag-pill active">For You</div>
+            <div class="tag-pill">Energy</div>
+            <div class="tag-pill">Local</div>
+            <div class="tag-pill">Politics</div>
+            <div class="tag-pill">Climate</div>
+          </div>
+
+          <div class="feed">
+            <div class="card hero">
+              <div class="card-tags">
+                <span class="micro-tag">● BREAKING</span>
+                <span class="micro-tag muted">#ENERGY</span>
+                <span class="micro-tag muted">#MILLBROOK</span>
+              </div>
+              <h3>Explosion Rocks Millbrook Fuel Terminal; Cause Disputed</h3>
+              <div class="card-meta">
+                <span><span class="live-dot"></span>17 sources · narrative diverges</span>
+                <div class="source-avatars">
+                  <div class="dot">W</div><div class="dot">TV</div><div class="dot">@</div><div class="dot">+14</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card dim">
+              <div class="card-tags"><span class="micro-tag muted">#CLIMATE</span></div>
+              <h3>Coastal Counties Move Up Flood-Season Timeline</h3>
+              <div class="card-meta">
+                <span>6 sources · updated 40m ago</span>
+                <div class="source-avatars"><div class="dot">W</div><div class="dot">B</div></div>
+              </div>
+            </div>
+
+            <div class="card dim">
+              <div class="card-tags"><span class="micro-tag muted">#POLITICS</span></div>
+              <h3>Transit Budget Vote Pushed to Next Session</h3>
+              <div class="card-meta">
+                <span>9 sources · updated 2h ago</span>
+                <div class="source-avatars"><div class="dot">W</div><div class="dot">@</div><div class="dot">+7</div></div>
+              </div>
+            </div>
+
+            <div class="card dim">
+              <div class="card-tags"><span class="micro-tag muted">#LOCAL</span></div>
+              <h3>School Board Reverses Course on Calendar Change</h3>
+              <div class="card-meta">
+                <span>4 sources · updated 5h ago</span>
+                <div class="source-avatars"><div class="dot">TV</div><div class="dot">B</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone-tabbar">
+            <div class="tab on">FEED</div>
+            <div class="tab">SEARCH</div>
+            <div class="tab">SAVED</div>
+            <div class="tab">PROFILE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL / TIMELINE (browser) -->
+    <div>
+      <div class="frame-label">Web — Story Detail &amp; Narrative Timeline</div>
+      <div class="browser">
+        <div class="browser-chrome">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url-pill">agora.news/story/millbrook-terminal-explosion</span>
+        </div>
+
+        <div class="detail">
+          <div class="breaking-row">
+            <span class="breaking-flag">DIVERGING</span>
+            <span class="breaking-meta">Opened 08:14 · Last update 14:30 · 17 sources tracked</span>
+          </div>
+          <h1>Explosion Rocks Millbrook Fuel Terminal; Cause Disputed</h1>
+          <p class="detail-sub">A fire and explosion at the Millbrook fuel terminal's north tank farm prompted evacuations Tuesday morning. Early reporting agreed on the basic event; accounts diverged sharply on cause before investigators issued findings.</p>
+
+          <div class="source-array">
+            <div class="array-label">Sources reporting on this story</div>
+            <div class="src-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="1"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="13" y2="16"/></svg>
+              Wire reports <span class="n">4</span>
+            </div>
+            <div class="src-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="14" height="12" rx="1"/><polygon points="17,10 21,7 21,17 17,14"/></svg>
+              Local broadcast <span class="n">3</span>
+            </div>
+            <div class="src-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.4 8.4H3l2.4-5A8.38 8.38 0 1 1 21 11.5z"/></svg>
+              Verified social <span class="n">6</span>
+            </div>
+            <div class="src-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 L15 9 a2.1 2.1 0 0 1 3 3 L7 23z"/><path d="M13 6l3 3"/></svg>
+              Independent blogs <span class="n">2</span>
+            </div>
+            <div class="src-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15v-2a8 8 0 0 1 16 0v2"/><path d="M2 15h4v5H3a1 1 0 0 1-1-1zM22 15h-4v5h3a1 1 0 0 0 1-1z"/></svg>
+              Official statements <span class="n">2</span>
+            </div>
+          </div>
+
+          <div class="legend">
+            <div class="legend-item"><span class="legend-swatch" style="background:var(--ink-faint)"></span>Shared trunk</div>
+            <div class="legend-item"><span class="legend-swatch" style="background:var(--verified-teal)"></span>Official / verified branch</div>
+            <div class="legend-item"><span class="legend-swatch" style="background:var(--disputed-rose)"></span>Unverified branch</div>
+          </div>
+
+          <div class="timeline-wrap" id="tlWrap">
+            <svg id="tlSvg" width="100%" height="560" viewBox="0 0 900 560" preserveAspectRatio="none"></svg>
+
+            <div class="t-row trunk">
+              <div class="t-node">
+                <div class="time">08:14</div>
+                <div class="src-line">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="1"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                  <span class="src-name">WIRE REPORT</span>
+                </div>
+                <p>First report of explosion at loading dock; two contractors injured, evacuation underway.</p>
+              </div>
+            </div>
+
+            <div class="t-row trunk">
+              <div class="t-node">
+                <div class="time">08:19</div>
+                <div class="src-line">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.4 8.4H3l2.4-5A8.38 8.38 0 1 1 21 11.5z"/></svg>
+                  <span class="src-name">VERIFIED SOCIAL</span>
+                </div>
+                <p>Bystander video geolocated to the north tank farm; confirms visible fireball. Cause not yet addressed.</p>
+              </div>
+            </div>
+
+            <div class="fork-label">— narrative diverges at 08:31 —</div>
+
+            <div class="branch-heading">
+              <div class="bh left">Official account</div>
+              <div class="bh right">Unverified claim</div>
+            </div>
+
+            <div class="t-row left">
+              <div class="t-node teal">
+                <div class="time">09:02</div>
+                <div class="src-line">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="14" height="12" rx="1"/><polygon points="17,10 21,7 21,17 17,14"/></svg>
+                  <span class="src-name">LOCAL BROADCAST</span>
+                </div>
+                <p>Fire officials cite a preliminary equipment failure — a possible gas leak — as the likely cause.</p>
+              </div>
+            </div>
+
+            <div class="t-row right">
+              <div class="t-node rose">
+                <div class="time">09:10</div>
+                <div class="src-line">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20 L15 9 a2.1 2.1 0 0 1 3 3 L7 23z"/></svg>
+                  <span class="src-name">INDEPENDENT BLOG</span>
+                </div>
+                <p>A local blogger alleges deliberate sabotage linked to an ongoing labor dispute, citing one anonymous worker.</p>
+              </div>
+            </div>
+
+            <div class="t-row left">
+              <div class="t-node teal">
+                <div class="time">10:15</div>
+                <div class="src-line">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15v-2a8 8 0 0 1 16 0v2"/><path d="M2 15h4v5H3a1 1 0 0 1-1-1zM22 15h-4v5h3a1 1 0 0 0 1-1z"/></svg>
+                  <span class="src-name">OFFICIAL STATEMENT</span>
+                </div>
+                <p>Terminal operator confirms a valve failure during routine transfer; denies any external interference.</p>
+              </div>
+            </div>
+
+            <div class="t-row right">
+              <div class="t-node rose retracted">
+                <div class="time">11:40</div>
+                <div class="src-line">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.4 8.4H3l2.4-5A8.38 8.38 0 1 1 21 11.5z"/></svg>
+                  <span class="src-name">VERIFIED SOCIAL</span>
+                </div>
+                <p>Sabotage claim spreads across several accounts; no supporting evidence surfaces.</p>
+              </div>
+            </div>
+
+            <div class="fork-label">— branches reconverge at 14:30 —</div>
+
+            <div class="t-row trunk">
+              <div class="t-node teal">
+                <div class="time">14:30</div>
+                <div class="src-line">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="1"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                  <span class="src-name">WIRE REPORT</span>
+                </div>
+                <p>Independent investigators confirm the valve-failure account; the sabotage claim is found unsupported.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-note">Mockup for investor presentation — story, sources, and quotes are hypothetical and for illustrative purposes only.</div>
+
+<script>
+function draw(){
+  const svg = document.getElementById('tlSvg');
+  const wrap = document.getElementById('tlWrap');
+  const rows = wrap.querySelectorAll('.t-row');
+  const wrapRect = wrap.getBoundingClientRect();
+  svg.setAttribute('viewBox', '0 0 ' + wrapRect.width + ' ' + wrapRect.height);
+  svg.setAttribute('height', wrapRect.height);
+  svg.innerHTML = '';
+
+  function centerOf(el, side){
+    const r = el.getBoundingClientRect();
+    const x = side === 'left' ? (r.left - wrapRect.left + r.width/2)
+            : side === 'right' ? (r.left - wrapRect.left + r.width/2)
+            : (r.left - wrapRect.left + r.width/2);
+    return { x, top: r.top - wrapRect.top, bottom: r.bottom - wrapRect.top, midY: r.top - wrapRect.top + r.height/2 };
+  }
+
+  const pts = [];
+  rows.forEach(row=>{
+    const node = row.querySelector('.t-node');
+    const kind = row.classList.contains('left') ? 'left' : row.classList.contains('right') ? 'right' : 'trunk';
+    pts.push({ kind, box: centerOf(node, kind) });
+  });
+
+  function path(d, color, dashed){
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d', d);
+    p.setAttribute('stroke', color);
+    p.setAttribute('stroke-width', '2');
+    p.setAttribute('fill', 'none');
+    if(dashed) p.setAttribute('stroke-dasharray','4 4');
+    svg.appendChild(p);
+  }
+  function dot(x,y,color){
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',4);
+    c.setAttribute('fill',color);
+    svg.appendChild(c);
+  }
+
+  const inkFaint = getComputedStyle(document.documentElement).getPropertyValue('--ink-faint').trim();
+  const teal = getComputedStyle(document.documentElement).getPropertyValue('--verified-teal').trim();
+  const rose = getComputedStyle(document.documentElement).getPropertyValue('--disputed-rose').trim();
+
+  for(let i=0;i<pts.length-1;i++){
+    const a = pts[i], b = pts[i+1];
+    const y1 = a.box.bottom, y2 = b.box.top;
+    const x1 = a.box.x, x2 = b.box.x;
+    let color = inkFaint;
+    if(b.kind==='left') color = teal;
+    else if(b.kind==='right') color = rose;
+    else if(a.kind==='left' && b.kind==='trunk') color = teal;
+    else if(a.kind==='right' && b.kind==='trunk') color = rose;
+    const midY = (y1+y2)/2;
+    path(`M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`, color);
+    dot(x1,y1,color); dot(x2,y2,color);
+  }
+}
+window.addEventListener('load', draw);
+window.addEventListener('resize', draw);
+</script>
+
+</body>
+</html>
